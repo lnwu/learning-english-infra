@@ -1,0 +1,29 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Default rule - deny all access
+    // Customize these rules based on your application needs
+    match /{document=**} {
+      allow read, write: if false;
+    }
+    
+    // Example: Allow authenticated users to read/write their own data
+    // match /users/{userId} {
+    //   allow read, write: if request.auth != null && request.auth.uid == userId;
+    // }
+    
+    // Example: Allow anonymous users to read public data
+    // match /public/{document=**} {
+    //   allow read: if request.auth != null;
+    // }
+    
+    // Example: Allow anonymous users to write to specific collections
+    // match /submissions/{submissionId} {
+    //   allow create: if request.auth != null;
+    //   allow read, update, delete: if request.auth != null && 
+    //     request.auth.uid == resource.data.userId;
+    // }
+  }
+}

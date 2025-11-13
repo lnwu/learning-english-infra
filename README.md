@@ -69,13 +69,15 @@ terraform apply
 
 ```
 .
+├── main.tf             # Core GCP project resources
 ├── backend.tf          # Remote state configuration (GCS)
 ├── provider.tf         # GCP provider configuration
 ├── versions.tf         # Terraform and provider version constraints
 ├── variables.tf        # Input variable definitions
 ├── outputs.tf          # Output value definitions
-├── oauth.tf           # OAuth client resources (placeholder)
-├── firebase.tf        # Firebase project and database resources (placeholder)
+├── oauth.tf            # OAuth client resources (placeholder)
+├── firebase.tf         # Firebase project and database resources (placeholder)
+├── firestore.rules     # Firestore security rules template
 └── terraform.tfvars.example  # Example variable values
 ```
 
