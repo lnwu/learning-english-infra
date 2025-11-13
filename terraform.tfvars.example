@@ -1,0 +1,7 @@
+# Example Terraform Variables Configuration
+# Copy this file to terraform.tfvars and fill in your values
+# Note: terraform.tfvars is gitignored for security
+
+project_id  = "your-gcp-project-id"
+region      = "us-central1"
+environment = "dev"
