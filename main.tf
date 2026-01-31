@@ -37,5 +37,4 @@ module "firebase" {
   project_id   = local.project_id
   project_name = local.project_name
   web_app_name = local.web_app_name
-
 }
