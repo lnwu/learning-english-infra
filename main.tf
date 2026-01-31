@@ -13,44 +13,29 @@ terraform {
   }
 }
 
-resource "google_project" "learning_english" {
-  project_id = "learning-english-477407"
-  name       = "learning-english"
+locals {
+  project_id   = "learning-english-477407"
+  project_name = "learning-english"
+  region       = "asia-east2"
+  web_app_name = "Learning English Web"
 }
 
-resource "google_project_service" "firebase" {
-  disable_on_destroy = true
-  project            = google_project.learning_english.project_id
-  service            = "firebase.googleapis.com"
+provider "google" {
+  project = local.project_id
+  region  = local.region
 }
 
-resource "google_project_service" "firestore" {
-  service            = "firestore.googleapis.com"
-  disable_on_destroy = true
-  depends_on         = [google_project_service.firebase]
+provider "google-beta" {
+  project = local.project_id
+  region  = local.region
 }
 
-resource "google_firebase_project" "default" {
-  provider = google-beta
-  project  = google_project.learning_english.project_id
+module "firebase" {
+  source = "./modules/firebase"
 
-  depends_on = [google_project_service.firebase]
-}
+  region       = local.region
+  project_id   = local.project_id
+  project_name = local.project_name
+  web_app_name = local.web_app_name
 
-resource "google_firebase_web_app" "default" {
-  provider     = google-beta
-  project      = google_project.learning_english.project_id
-  display_name = "Learning English Web"
-
-  depends_on = [google_firebase_project.default]
-}
-
-resource "google_firestore_database" "default" {
-  provider    = google-beta
-  project     = google_project.learning_english.project_id
-  name        = "(default)"
-  location_id = "asia-east2"
-  type        = "FIRESTORE_NATIVE"
-
-  depends_on = [google_project_service.firestore]
 }
